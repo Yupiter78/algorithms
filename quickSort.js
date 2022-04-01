@@ -9,9 +9,9 @@ function quickSort(arr) {
     // console.log("more:", more);
 
     // const pivot = arr[Math.round(arr.length / 2)];
-    const pivot = arr[arr.length - 1];
-    const less = [];
-    const more = [];
+    const pivot = arr[arr.length - 1],
+        less = [],
+        more = [];
 
     for (let i = 0; i < arr.length - 1; i++) {
         if (arr[i] < pivot) {
