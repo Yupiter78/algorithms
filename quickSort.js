@@ -2,13 +2,7 @@ function quickSort(arr) {
     if (arr.length < 2) {
         return arr;
     }
-    // let pivot = arr[Math.round(arr.length / 2)];
-    // const less = arr.filter((item) => item < pivot);
-    // console.log("less:", less);
-    // const more = arr.filter((item) => item >= pivot);
-    // console.log("more:", more);
 
-    // const pivot = arr[Math.round(arr.length / 2)];
     const pivot = arr[arr.length - 1],
         less = [],
         more = [];
@@ -31,8 +25,11 @@ const testArr = [2, 5, 56, 1, 4, 7, 8, 3, 12, 34, 89, 12, 19];
 console.log("quickSort(testArr):", quickSort(testArr));
 
 function partition(arr, start, end){
-    const pivotValue = arr[end];
+    const pivotValue = arr[end]; // присвоение значение последнего элемента массива в качестве опорного элемента;
     let pivotIndex = start;
+    //  с помощью переменной pivotIndex отслеживается «среднее» положение, когда все элементы слева меньше,
+    //  а все элементы справа больше, чем pivotValue.
+    console.log("pivotIndex:", pivotIndex);
     for (let i = start; i < end; i++) {
         if (arr[i] < pivotValue) {
             [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
@@ -40,9 +37,9 @@ function partition(arr, start, end){
         }
     }
 
-    [arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]]
+    [arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]];
     return pivotIndex;
-};
+}
 
 function quickSortRecursive(arr, start, end) {
     if (start >= end) {
@@ -51,11 +48,12 @@ function quickSortRecursive(arr, start, end) {
 
     let index = partition(arr, start, end);
 
-    quickSort(arr, start, index - 1);
-    quickSort(arr, index + 1, end);
+    quickSortRecursive(arr, start, index - 1);// сортировка массива с значениями меньше pivotValue;
+    quickSortRecursive(arr, index + 1, end);// сортировка массива с значениями больше pivotValue;
 }
 
 const arrayForTest = [2, 5, 56, 1, 4, 7, 8, 3, 12, 34, 89, 12, 19];
 
 quickSortRecursive(arrayForTest, 0, arrayForTest.length - 1);
 console.log("arrayForTest:", arrayForTest);
+
