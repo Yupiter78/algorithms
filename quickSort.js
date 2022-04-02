@@ -1,4 +1,4 @@
-function quickSort(arr) {
+/*function quickSort(arr) {
     if (arr.length < 2) {
         return arr;
     }
@@ -92,7 +92,7 @@ function quickSortIterative(arr) {
 
 const arrayForTest2 = [2, 5, 56, 1, 4, 7, 8, 3, 12, 34, 89, 12, 19];
 quickSortIterative(arrayForTest2);
-console.log("arrayForTest_iterative:", arrayForTest2);
+console.log("arrayForTest_iterative:", arrayForTest2);*/
 
 // меняем местами элементы в массивах:
 function swap(arr, a, b) {
@@ -131,10 +131,16 @@ function quick(arr, left, right, compare) {
 }
 function partitionCompare(arr, left, right, compare) {
     console.log("left, right:", left, right);
-    const pivot = arr[Math.floor((right - left) / 2)];
+    console.log("arr:", arr);
+    console.log("Math.floor(((right + 1) - left) / 2):", Math.floor(((right + 1) - left) / 2));
+    console.log("Math.round(((right + 1) - left) / 2):", Math.round(((right + 1) - left) / 2));
+    console.log("arr[Math.round((right - left) / 2)]:", arr[Math.round(((right + 1) - left) / 2)]);
+
+    const pivot = arr[Math.round(((right + 1) - left) / 2)];
     let i = left;
     let j = right;
     while (i <= j) {
+        console.log("i <= j:", `${i} <= ${j}`)
         while (compare(arr[i], pivot) === Compare.LESS_THAN) {
             i++;
         }
