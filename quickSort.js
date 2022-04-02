@@ -52,10 +52,10 @@ function quickSortRecursive(arr, start, end) {
     quickSortRecursive(arr, index + 1, end);// сортировка массива с значениями больше pivotValue;
 }
 
-const arrayForTest = [2, 5, 56, 1, 4, 7, 8, 3, 12, 34, 89, 12, 19];
+const arrayForTest1 = [2, 5, 56, 1, 4, 7, 8, 3, 12, 34, 89, 12, 19];
 
-quickSortRecursive(arrayForTest, 0, arrayForTest.length - 1);
-console.log("arrayForTest_recursive:", arrayForTest);
+quickSortRecursive(arrayForTest1, 0, arrayForTest1.length - 1);
+console.log("arrayForTest_recursive:", arrayForTest1);
 
 function quickSortIterative(arr) {
     // Создание массива, который мы будем использовать в качестве стека, с помощью функций push() и pop()
@@ -90,6 +90,67 @@ function quickSortIterative(arr) {
     }
 }
 
+const arrayForTest2 = [2, 5, 56, 1, 4, 7, 8, 3, 12, 34, 89, 12, 19];
+quickSortIterative(arrayForTest2);
+console.log("arrayForTest_iterative:", arrayForTest2);
 
-quickSortIterative(arrayForTest);
-console.log("arrayForTest_iterative:", arrayForTest);
+// меняем местами элементы в массивах:
+function swap(arr, a, b) {
+    let temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+}
+
+// сравниваем элементы:
+const Compare = {
+    LESS_THAN: -1,
+    BIGGER_THAN: 1
+};
+function defaultCompare(a, b) {
+    if (a === b) {
+        return 0;
+    }
+    return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN;
+}
+
+function quickSortCompare(arr, compare = defaultCompare) {
+    return quick(arr, 0, arr.length - 1, compare);
+}
+function quick(arr, left, right, compare) {
+    let i;
+    if (arr.length > 1) {
+        i = partitionCompare(arr, left, right, compare);
+        if (left < i - 1) {
+            quick(arr, left, i - 1, compare);
+        }
+        if (i < right) {
+            quick(arr, i, right, compare);
+        }
+    }
+    return arr;
+}
+function partitionCompare(arr, left, right, compare) {
+    console.log("left, right:", left, right);
+    const pivot = arr[Math.floor((right - left) / 2)];
+    let i = left;
+    let j = right;
+    while (i <= j) {
+        while (compare(arr[i], pivot) === Compare.LESS_THAN) {
+            i++;
+        }
+        while (compare(arr[j], pivot) === Compare.BIGGER_THAN) {
+            j--;
+        }
+        if (i <= j) {
+            swap(arr, i, j);
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
+
+const arrayForTest3 = [2, 5, 56, 1, 4, 7, 8, 3, 12, 34, 89, 12, 19];
+
+quickSortCompare(arrayForTest3)
+console.log("arrayForTest3:", arrayForTest3);
