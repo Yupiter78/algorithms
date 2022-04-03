@@ -96,9 +96,12 @@ console.log("arrayForTest_iterative:", arrayForTest2);*/
 
 // меняем местами элементы в массивах:
 function swap(arr, a, b) {
-    let temp = arr[a];
+    /*let temp = arr[a];
     arr[a] = arr[b];
-    arr[b] = temp;
+    arr[b] = temp;*/
+
+    console.log(`[arr[${a}], arr[${b}]]:`, [arr[b], arr[a]]);
+    [arr[a], arr[b]] = [arr[b], arr[a]];
 }
 
 // сравниваем элементы:
@@ -114,6 +117,7 @@ function defaultCompare(a, b) {
 }
 
 function quickSortCompare(arr, compare = defaultCompare) {
+    console.log("arr:", arr);
     return quick(arr, 0, arr.length - 1, compare);
 }
 function quick(arr, left, right, compare) {
@@ -130,28 +134,60 @@ function quick(arr, left, right, compare) {
     return arr;
 }
 function partitionCompare(arr, left, right, compare) {
-    console.log("left, right:", left, right);
-    console.log("arr:", arr);
-    console.log("Math.floor(((right + 1) - left) / 2):", Math.floor(((right + 1) - left) / 2));
-    console.log("Math.round(((right + 1) - left) / 2):", Math.round(((right + 1) - left) / 2));
-    console.log("arr[Math.round((right - left) / 2)]:", arr[Math.round(((right + 1) - left) / 2)]);
 
-    const pivot = arr[Math.round(((right + 1) - left) / 2)];
+    const pivot = arr[Math.floor((right + left) / 2)];
+    console.log("pivot:", pivot);
+    /*Выбор опорного элемента играет важную роль.
+        Если вы выберете первый элемент в качестве элемента pivot,
+        то он даст худшую производительность в отсортированном массиве.
+        Таким образом, всегда желательно выбрать средний элемент
+    (длина массива, разделенная на 2) в качестве основного элемента*/
     let i = left;
     let j = right;
     while (i <= j) {
-        console.log("i <= j:", `${i} <= ${j}`)
         while (compare(arr[i], pivot) === Compare.LESS_THAN) {
+            console.log("compare(arr[i], pivot) === Compare.LESS_THAN:", compare(arr[i], pivot) === Compare.LESS_THAN);
+
+            console.log(`arr_i_[${i}]:`, arr[i]);
+            console.log(`NEXT_compare(arr_i + 1_[${i}]: ${arr[i + 1]}, pivot: ${pivot}) === Compare.LESS_THAN:`, compare(arr[i + 1], pivot) === Compare.LESS_THAN);
+            console.log("_____________________I____________________");
             i++;
         }
         while (compare(arr[j], pivot) === Compare.BIGGER_THAN) {
+            console.log("compare(arr[j], pivot) === Compare.BIGGER_THAN:", compare(arr[j], pivot) === Compare.BIGGER_THAN);
+
+            console.log(`arr_j_[${j}]:`, arr[j]);
+            console.log(`NEXT_compare(arr_j - 1_[${j}]: ${arr[j - 1]}, pivot: ${pivot}) === Compare.BIGGER_THAN:`, compare(arr[j - 1], pivot) === Compare.BIGGER_THAN);
+            console.log("______________________J___________________");
             j--;
         }
+        /*const Compare = {
+            LESS_THAN: -1,
+            BIGGER_THAN: 1
+        };
+        function defaultCompare(a, b) {
+            if (a === b) {
+                return 0;
+            }
+            return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN;
+        }
+
+        function swap(arr, a, b) {
+    let temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+
+    [arr[a], arr[b]] = [arr[b], arr[a]];
+}*/
+
         if (i <= j) {
             swap(arr, i, j);
             i++;
             j--;
         }
+
+        console.log("_____________________NEXT_WHILE____________________");
+
     }
     return i;
 }
