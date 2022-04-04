@@ -100,7 +100,7 @@ function swap(arr, a, b) {
     arr[a] = arr[b];
     arr[b] = temp;*/
 
-    console.log(`[arr[${a}], arr[${b}]]:`, [arr[b], arr[a]]);
+    console.log(`[arr[${a}], arr[${b}]]:`, `${arr[a]} <= меняем местами элементы => ${arr[b]}`);
     [arr[a], arr[b]] = [arr[b], arr[a]];
 }
 
@@ -131,9 +131,11 @@ function quick(arr, left, right, compare) {
             quick(arr, i, right, compare);
         }
     }
+    console.log("_______ARR_______:", arr);
     return arr;
 }
 function partitionCompare(arr, left, right, compare) {
+    console.log("=======right========:", right);
 
     const pivot = arr[Math.floor((right + left) / 2)];
     console.log("pivot:", pivot);
@@ -145,11 +147,13 @@ function partitionCompare(arr, left, right, compare) {
     let i = left;
     let j = right;
     while (i <= j) {
+        const newArr = arr.slice(i, j + 1);
+        console.log("newArr:", newArr);
         while (compare(arr[i], pivot) === Compare.LESS_THAN) {
             console.log("compare(arr[i], pivot) === Compare.LESS_THAN:", compare(arr[i], pivot) === Compare.LESS_THAN);
 
             console.log(`arr_i_[${i}]:`, arr[i]);
-            console.log(`NEXT_compare(arr_i + 1_[${i}]: ${arr[i + 1]}, pivot: ${pivot}) === Compare.LESS_THAN:`, compare(arr[i + 1], pivot) === Compare.LESS_THAN);
+            console.log(`NEXT_compare(arr_i + 1_[${i + 1}]: ${arr[i + 1]}, pivot: ${pivot}) === Compare.LESS_THAN:`, compare(arr[i + 1], pivot) === Compare.LESS_THAN);
             console.log("_____________________I____________________");
             i++;
         }
@@ -157,7 +161,7 @@ function partitionCompare(arr, left, right, compare) {
             console.log("compare(arr[j], pivot) === Compare.BIGGER_THAN:", compare(arr[j], pivot) === Compare.BIGGER_THAN);
 
             console.log(`arr_j_[${j}]:`, arr[j]);
-            console.log(`NEXT_compare(arr_j - 1_[${j}]: ${arr[j - 1]}, pivot: ${pivot}) === Compare.BIGGER_THAN:`, compare(arr[j - 1], pivot) === Compare.BIGGER_THAN);
+            console.log(`NEXT_compare(arr_j - 1_[${j - 1}]: ${arr[j - 1]}, pivot: ${pivot}) === Compare.BIGGER_THAN:`, compare(arr[j - 1], pivot) === Compare.BIGGER_THAN);
             console.log("______________________J___________________");
             j--;
         }
@@ -184,11 +188,13 @@ function partitionCompare(arr, left, right, compare) {
             swap(arr, i, j);
             i++;
             j--;
+            console.log(`SWAP: i: ${i}, j: ${j}`);
         }
 
-        console.log("_____________________NEXT_WHILE____________________");
+        console.log(`______NEXT_WHILE: i: ${i}, j: ${j}____________________`);
 
     }
+    console.log("RETURN i:", i);
     return i;
 }
 
